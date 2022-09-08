@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_randomizer/randomizer_change_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_randomizer/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 typedef IntValueSetter = void Function(int value);
 
@@ -18,23 +18,27 @@ class RangeSelectorForm extends StatelessWidget {
       key: formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RangeSelectorTextFormField(
-              labelText: "Minimum",
-              intValueSetter: (value) =>
-                  context.read<RandomizerChangeNotifier>().max = value,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            RangeSelectorTextFormField(
-              labelText: "Maximum",
-              intValueSetter: (value) =>
-                  context.read<RandomizerChangeNotifier>().max = value,
-            ),
-          ],
+        child: Consumer(
+          builder: ((context, ref, child) {
+            final _randomizerProvider = ref.watch(randomizerProvider);
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RangeSelectorTextFormField(
+                  labelText: "Minimum",
+                  intValueSetter: (value) => _randomizerProvider.max = value,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                RangeSelectorTextFormField(
+                  labelText: "Maximum",
+                  intValueSetter: (value) => _randomizerProvider.max = value,
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
