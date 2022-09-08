@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_randomizer/range_selector_page.dart';
 
-// Default StatefulWidger approach
+// Default StatefulWidget approach
 void main() {
   runApp(const MyApp());
 }
